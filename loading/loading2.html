@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>loading动画效果二</title>
+    <style>
+        .spinner {
+            width: 50px;
+            height: 50px;
+            background: #4cff43;
+            margin: 100px auto;
+            -webkit-animation: rollover 1.2s infinite ease-in-out;
+            -o-animation: rollover 1.2s infinite ease-in-out;
+            animation: rollover 1.2s infinite ease-in-out;
+        }
+        @keyframes rollover {
+            0% {
+                transform: perspective(500px) rotateY(-180deg);
+            }
+            50% {
+                transform: perspective(500px) rotateX(-180deg);
+            }
+           /* 100% {
+                transform: rotateY(360deg);
+            }*/
+        }
+    </style>
+</head>
+<body>
+    <div class="spinner"></div>
+</body>
+</html>

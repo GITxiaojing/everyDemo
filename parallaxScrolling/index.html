@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>视差滚动效果</title>
+    <style>
+        .image {
+            width: 1000px;
+            height: 900px;
+            margin: 0 auto;
+            background: #f40;
+            background: url(../images/Penguins.jpg) no-repeat;
+            -webkit-background-size: 1000px;
+            background-size: 1000px;
+            overflow-x: scroll;
+        }
+        .windows {
+            width: 1000px;
+            height: 1400px;
+            padding: 0;
+        }
+        .windows div {
+            height: 20%;
+        }
+        .windows div:nth-child(1) {
+            background: #fff;
+            border: 1px solid #ccc;
+        }
+        .windows div:nth-child(2) {
+            background: #fff;
+            border: 1px solid #ccc;
+        }
+        .windows div:nth-child(3) {
+            color: #fff;
+            border: 1px solid #ccc;
+            /*opacity: 0;*/
+            background-color:rgba(255,255,255,0);  //实现背景透明，文字不透明的效果
+        }
+        .windows div:nth-child(4) {
+            border: 1px solid #ccc;
+            background: #fff;
+        }
+        .windows div:nth-child(5) {
+            border: 1px solid #ccc;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="image">
+        <div class="windows">
+            <div>新闻一 由于 DOM 分为多个级别，也包含多个部分，因此检测浏览器实现了 DOM 的哪些部分就十分必要
+                了。document.implementation 属性就是为此提供相应信息和功能的对象，与浏览器对 DOM 的实现
+                直接对应。
+            </div>
+            <div>新闻二 由于 DOM 分为多个级别，也包含多个部分，因此检测浏览器实现了 DOM 的哪些部分就十分必要
+                了。document.implementation 属性就是为此提供相应信息和功能的对象，与浏览器对 DOM 的实现
+                直接对应。
+            </div>
+            <div>
+                透明的吖
+            </div>
+            <div>新闻三 由于 DOM 分为多个级别，也包含多个部分，因此检测浏览器实现了 DOM 的哪些部分就十分必要
+                了。document.implementation 属性就是为此提供相应信息和功能的对象，与浏览器对 DOM 的实现
+                直接对应。
+            </div>
+            <div>新闻四 由于 DOM 分为多个级别，也包含多个部分，因此检测浏览器实现了 DOM 的哪些部分就十分必要
+                了。document.implementation 属性就是为此提供相应信息和功能的对象，与浏览器对 DOM 的实现
+                直接对应。</div>
+        </div>
+    </div>
+</body>
+</html>
