@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>loading动画效果六</title>
+    <style>
+        .spinner {
+            width: 120px;
+            height:30px;
+            position: relative;
+            margin: 100px auto;
+            text-align: center;
+        }
+        .spinner div {
+            width: 30px;
+            height:30px;
+            background: #67CF22;
+            border-radius: 50%;
+            display: inline-block;
+            animation: appear 1.4s infinite ease-in-out;
+            animation-fill-mode: both;
+        }
+        .spinner .circle1 {
+            animation-delay: -0.32s;
+        }
+        .spinner .circle2 {
+            animation-delay: -0.16s;
+        }
+        @keyframes appear {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1.0);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="spinner">
+    <div class="circle1"></div>
+    <div class="circle2"></div>
+    <div class="circle3"></div>
+</div>
+</body>
+</html>

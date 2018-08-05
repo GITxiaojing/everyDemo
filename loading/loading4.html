@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>loading效果四</title>
+    <style>
+        .spinner {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            margin: 100px auto;
+        }
+        .spinner div {
+            background: #67CF22;
+            height: 30px;
+            width: 30px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            -webkit-animation: square 2.0s infinite ease-in-out;
+            -o-animation: square 2.0s infinite ease-in-out;
+            animation: square 2.0s infinite ease-in-out;
+        }
+        
+        .spinner .square2 {
+            animation-delay: -1.0s;
+        }
+        
+        @keyframes square {
+            25% {
+                transform: scale(0.5) translate(42px, 0) rotate(-90deg);
+            }
+            50% {
+                transform: scale(1.0) translate(42px, 42px) rotate(-180deg);
+            }
+            75% {
+                transform: scale(0.4) translate(0, 42px) rotate(-270deg);
+            }
+            100% {
+                transform: rotate(-360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="spinner">
+    <div class="square1"></div>
+    <div class="square2"></div>
+</div>
+</body>
+</html>

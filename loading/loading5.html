@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>loading动画效果五</title>
+    <style>
+        .spinner {
+            height: 100px;
+            width: 100px;
+            margin: 100px auto;
+            position: relative;
+            text-align: center;
+            animation: rotate 2.0s infinite linear;
+        }
+
+        .spinner div {
+            width: 60%;
+            height: 60%;
+            border-radius: 100%;
+            display: inline-block;
+            background: #67CF22;
+            position: absolute;
+            top: 0;
+            animation: circle 2.0s infinite ease-in-out;
+        }
+
+        .spinner .circle2 {
+            top: auto;
+            bottom: 0;
+            animation-delay: -1.0s;
+        }
+        
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes circle {
+            0%, 100% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="spinner">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+    </div>
+</body>
+</html>

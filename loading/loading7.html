@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>loading动画效果七</title>
+    <style>
+        .spinner {
+            background: #67CF22;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 100px auto;
+            animation: bounce 1.0s infinite ease-in-out;
+        }
+        @keyframes bounce {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1.0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="spinner">
+</div>
+</body>
+</html>
