@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播效果一</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 500px;
+            height: 250px;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .slider-box {
+            width: 500px;
+            height: 250px;
+        }
+        .slider-main {
+            width: 500px;
+            height: 250px;
+            position: relative;
+        }
+        .slider-img {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 250px;
+            /*vertical-align: middle;   这个只能在内联元素上作用*/
+        }
+        .slider-img1 {
+            background: #93ff8f;
+        }
+        .slider-img2 {
+            background: #fffc67;
+        }
+        .slider-img3 {
+            background: #16ffc8;
+        }
+        .slider-img4 {
+            background: #ff8b37;
+        }
+        .slider-img5 {
+            background: #ff94f2;
+        }
+        .slider-side .slider-prev, .slider-side .slider-next {
+            position: absolute;
+            top: 50%;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            opacity: 0.15;
+            cursor: pointer;
+        }
+        .slider-prev {
+            background: url("../images/arrow-left.png") #000 no-repeat center center;
+            left: 5px;
+            text-indent: -999px;
+        }
+        .slider-next {
+            background: url("../images/arrow-right.png") #000 no-repeat center center;
+            right: 5px;
+            text-indent: 999px;
+        }
+        .slider-prev:hover, .slider-next:hover {
+            opacity: 0.4;
+        }
+        .slider-prev:active, .slider-next:active {
+            opacity: 0.4;
+            box-shadow: 2px -2px 5px #b9ac3c, -2px 2px 5px #b9ac3c;
+            box-radius: 50%;
+        }
+        .slider-wrap {
+            position: absolute;
+            left: 40%;
+            bottom: 12px;
+            /*z-index: 30;*/
+        }
+        .slider-wrap ul {
+            list-style: none;
+            height: 20px;
+            padding: 0 4px;
+            background: rgba(0, 0, 0, 0.5); 
+            border-radius: 8px;
+        }
+        .slider-wrap ul li {
+            float: left;
+            height: 12px;
+            margin: 4px;
+        }
+        .slider-wrap ul li {
+            text-indent: -999px;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 50%;
+            display: block;   /*text-indent只能给块级元素赋值*/
+        }
+        .slider-wrap ul li.current {
+            background: #FE6500;
+        }
+        .slider-wrap ul li:hover {
+            background: #FE6500;
+        }
+    </style>
+</head>
+<body>
+<div class="box" id="js-box">
+    <div class="slider-box">
+        <div class="slider-main" id="slider-main-block">
+            <div class="slider-img slider-img1">item 1</div>
+            <div class="slider-img slider-img2">item 2</div>
+            <div class="slider-img slider-img3">item 3</div>
+            <div class="slider-img slider-img4">item 4</div>
+            <div class="slider-img slider-img5">item 5</div>
+        </div>
+    </div>
+    <div class="slider-side" id="slider-side">
+        <span class="slider-prev">上一张</span>
+        <span class="slider-next">下一张</span>
+    </div>
+    <div class="slider-wrap">
+        <ul class="dot-wrap">
+            <li class="current">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    window.onload = function() {
+        var imgs = document.getElementById("slider-main-block");
+        var img = imgs.getElementsByTagName("div");
+        var prevBtn = document.getElementsByClassName("slider-prev")[0];
+        var nextBtn = document.getElementsByClassName("slider-next")[0];
+        var lis = document.getElementsByClassName("dot-wrap")[0].getElementsByTagName("li");
+        var ul =document.getElementsByTagName("ul")[0];
+        var start, a = 0;
+        var liWidth = img[0].offsetWidth;
+        var len = img.length;
+       // imgs.style.width = liWidth * len + "px";
+      //  console.log("imgs: ", imgs);
+      //  console.log("imgs.style.width: ", imgs.style.width);
+        
+        function init () {
+            start = setInterval(setTime, 2000);
+        }
+        init();
+        
+        function setTime() {
+            ++a;
+            if (a > 4) {
+                a = 0;
+            }
+            getActive();
+        }
+        
+        function getActive() {
+            for (var i = 0; i < len; i++) {
+                lis[i].className = "";
+                img[i].style.display = "none";
+            }
+            lis[a].className = "current";
+            img[a].style.display = "block";
+           // imgs.style.left = -a * liWidth + "px";
+          //  console.log("imgs.style.left: ", imgs.style.left);
+        }
+
+        ul.addEventListener("click", function(ev) {   //设置的点击圆点样式
+            var target = ev.target;
+            for(var i=0 ; i<lis.length; i++) {
+                if (lis[i] != target) {
+                    lis[i].className = "";
+                    img[i].style.display = "none";
+                } else {
+                    a = i;
+                    target.className = "current";
+                    img[i].style.display = "block";
+                }
+            }
+            //   imgs.style.left = -a * liWidth + "px";
+        }, false);
+
+        prevBtn.onclick = function () {
+            a--;
+            if (a < 0) {
+                a = len - 1;
+            }
+            getActive();
+        }
+
+        nextBtn.onclick = function () {
+            a++;
+            if (a > 4) {
+                a = 0;
+            }
+            getActive();
+        }
+    }
+</script>
+</html>
