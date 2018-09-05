@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实现全选、反选效果</title>
+    <style>
+        table {
+            margin: 0 auto;
+        }
+        table tr {
+            white-space: nowrap;
+            text-align: center;
+        }
+        table tr:nth-child(odd) {
+            background: #4cff43;
+        }
+        table tr:nth-child(even) {
+            background: #ff8b37;
+        }
+        table tr:nth-last-child(1), table tr:first-child {
+            background: #29cd68;
+        }
+    </style>
+</head>
+<body>
+    <table border="1" cellspacing="0" cellpadding="5" width="400" id="table">
+        <tr>
+            <th><input type="checkbox" id="selectAll">全选</th>
+            <th>发件人</th>
+            <th>邮件名称</th>
+            <th>邮件附属信息</th>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="checkbox"></td>
+            <td>张三</td>
+            <td>我是邮件</td>
+            <td>我是附属信息</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="checkbox"></td>
+            <td>张三</td>
+            <td>我是邮件</td>
+            <td>我是附属信息</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="checkbox"></td>
+            <td>张三</td>
+            <td>我是邮件</td>
+            <td>我是附属信息</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="checkbox"></td>
+            <td>张三</td>
+            <td>我是邮件</td>
+            <td>我是附属信息</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="checkbox"></td>
+            <td>张三</td>
+            <td>我是邮件</td>
+            <td>我是附属信息</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="checkbox"></td>
+            <td>张三</td>
+            <td>我是邮件</td>
+            <td>我是附属信息</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="checkbox"></td>
+            <td>张三</td>
+            <td>我是邮件</td>
+            <td>我是附属信息</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="checkbox"></td>
+            <td>张三</td>
+            <td>我是邮件</td>
+            <td>我是附属信息</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="checkbox"></td>
+            <td>张三</td>
+            <td>我是邮件</td>
+            <td>我是附属信息</td>
+        </tr>
+        <tr>
+            <td colspan="4" align="right">
+                <input type="button" value="取消全选" id="selectNone">
+                <input type="button" value="反选" id="selectInvert">
+            </td>
+        </tr>
+    </table>
+</body>
+<script>
+    window.onload = function () {
+        var selectAll = document.getElementById("selectAll");
+        var selectNone = document.getElementById("selectNone");
+        var selectInvert = document.getElementById("selectInvert");
+        selectAll.addEventListener("click", function (ev) {
+            ev = ev || event;
+            var checked = ev.target.checked;
+            var checkboxs = document.getElementsByClassName("checkbox");
+            for (var i = 0; i < checkboxs.length; i++) {
+                checkboxs[i].checked = checked;
+            }
+        }, false);
+        selectNone.addEventListener("click", function () {
+            selectAll.checked = false;
+            var checkboxs = document.getElementsByClassName("checkbox");
+            for (var i = 0; i < checkboxs.length; i++) {
+                checkboxs[i].checked = false;
+            }
+        }, false);
+        selectInvert.addEventListener("click", function () {
+            var checkboxs = document.getElementsByClassName("checkbox");
+            var tCount = 0, fCount = 0;
+            for (var i = 0; i < checkboxs.length; i++) {
+                checkboxs[i].checked = !checkboxs[i].checked;
+                if (checkboxs[i].checked) {
+                    tCount++;
+                } else {
+                    fCount++;
+                }
+            }
+            if(tCount == checkboxs.length) {
+                selectAll.checked = true;
+            } else if (fCount == checkboxs.length) {
+                selectAll.checked = false;
+            }
+        }, false);
+    }
+</script>
+</html>
