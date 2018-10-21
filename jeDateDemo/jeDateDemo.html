@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="jeDate/skin/jedate.css">
+    <script src="jquery-1.11.3.js"></script>
+    <script src="jeDate/src/jedate.js"></script>
+</head>
+<body>
+<div style="margin: 100px auto;">
+    <span class="datetxt">开始时间：</span>
+    <input type="text" class="dateinput dateicon" id="startTime" readonly>
+    <span class="datetxt">结束时间：</span>
+    <input type="text" class="dateinput dateicon" id="endTime" readonly>
+    <div style="margin-top:20px">
+        <button onclick="getData('https://www.withmedia.net/qiangmao_test/log/getLog',0)">测试pv</button>
+        <button onclick="getData('https://www.withmedia.net/qiangmao_test/log/getLog',1)">测试uv</button>
+        <button onclick="getData('https://www.withmedia.net/qiangmao/log/getLog',0)">线上pv</button>
+        <button onclick="getData('https://www.withmedia.net/qiangmao/log/getLog',1)">线上uv</button>
+    </div>
+
+    <table border="1" cellpadding="0" cellspacing="0" id="table" width="200px" style="margin-top: 20px;">
+        <tr>
+            <th>id</th>
+            <th>功能</th>
+            <th>数量</th>
+        </tr>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var start = {}, end = {};
+    jeDate("#startTime", {
+        format: "YYYY-MM-DD hh:mm:ss",
+        minDate: "2018-09-01 00:00:00",
+        doneFun: function (obj) {
+            end.minDate = obj.val;
+            start.time = jeDate.timeStampDate(obj.val);
+        }
+    });
+    jeDate("#endTime", {
+        format: "YYYY-MM-DD hh:mm:ss",
+
+        minDate: end.minDate,
+        doneFun: function (obj) {
+            end.time = jeDate.timeStampDate(obj.val);
+        }
+    })
+    ;
+
+    function getData(url, distinct) {
+        if (!startTime.value || !endTime.value) {
+            alert("请填入时间");
+            return;
+        }
+        $.ajax({
+            url: url,
+            type: "get",
+            async: false,
+            dataType: 'json',
+            //todo  这里改下 时间读取上面的startTime和endTime
+            data: {
+                startTime: new Date(startTime.value).getTime()/1000,
+                endTime: new Date(endTime.value).getTime()/1000,
+                distinct: distinct
+            },
+            success: function (json) {
+                var result = json.data;
+                if (!result) {
+                    return;
+                }
+
+                var con = "";
+                $.each(result, function (index, item) {
+                    con += "<tr>";
+                    con += "<td>" + item.id + "</td>";
+                    con += "<td>" + item.detail + "</td>";
+                    con += "<td>" + item.num + "</td>";
+                    con += "</tr>";
+                });
+                $('#tbody').html(con);
+            }
+        });
+    }
+</script>
+</body>
+</html>
