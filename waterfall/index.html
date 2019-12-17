@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>瀑布流式布局</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		html, body {
+			width: 100%;
+			height: 100%;
+			background: #FAFAFA;
+			overflow: auto;
+		}
+		.waterfall-box {
+			width: 1180px;
+			margin: 30px auto;
+			background: #cccccc;
+			padding: 10px;
+		}
+		.waterfall-grid {
+			margin: 0 auto;
+			width: 100%;
+			height: auto;
+			position: relative;
+		}
+		.waterfall-item {
+			position: absolute;
+			float: left;
+			display: inline-flex;
+			width: 216px;
+			flex-direction: column;
+			background: #FFFFFF;
+		}
+		.waterfall-item img {
+			padding: 8px;
+			width: 200px;
+			height: auto;
+		}
+		.waterfall-item .text-box {
+			padding: 10px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="waterfall-box" id="waterfallBox">
+		<div class="waterfall-grid" id="waterfallGrid">
+			<div class="waterfall-item">
+				<img src="../images/a1.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a2.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a3.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a4.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a5.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a6.jpeg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a7.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a8.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a9.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a10.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a11.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a12.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a13.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a14.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+			<div class="waterfall-item">
+				<img src="../images/a15.jpg" alt="">
+				<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>
+			</div>
+		</div>
+	</div>
+	<script>
+		var data = [
+			'../images/a1.jpg','../images/a2.jpg','../images/a3.jpg','../images/a4.jpg','../images/a5.jpg','../images/a6.jpeg',
+			'../images/a7.jpg','../images/a8.jpg','../images/a9.jpg','../images/a10.jpg','../images/a11.jpg','../images/a12.jpg',
+			'../images/a13.jpg','../images/a14.jpg','../images/a15.jpg'
+		]
+		var boxWidth = 0
+		var column = 0
+		window.onload = function () {
+			let box = document.getElementById('waterfallGrid')
+			let children = box.getElementsByClassName('waterfall-item')
+			boxWidth = children[0].offsetWidth // 每列盒子的宽度
+			var width = box.offsetWidth // 外框宽度
+			//	第一步： 先获取能容纳的列数：窗口宽度 / 每列宽度
+			column = Math.floor(width / boxWidth) // 能容纳的列数
+			waterfall(box, children)
+			document.body.addEventListener('scroll', function (e) {
+				appendBox(box, children)
+			})
+		}
+
+		function waterfall (wrap, boxes) {
+			var arr = new Array() // 装载每一列的高度
+			var minIndex = -1
+			for (var i = 0; i < boxes.length; i++) {
+				if (i < column) { // 当处于第一行时
+					arr[i] = boxes[i].offsetHeight + 20 // 底部留20px的间隔 + 本身盒子的高度
+					setStyle(boxes[i], 0 + 'px', (i > 0 ? i * (boxWidth + 20) : i * boxWidth) + 'px', i) // 设置样式
+				} else { // 非第一行
+					var minHeight = Math.min.apply(null, arr) // 找出数组中最小高度的一个
+					minIndex = getMinIndex(minHeight, arr) // 数组中最小高度的索引值
+					var left = getComputedStyle(boxes[minIndex], null).left // 获取找到的那一列的left值
+					setStyle(boxes[i], minHeight + 'px', left, i) // 设置样式
+					arr[minIndex] += boxes[i].offsetHeight + 20 // 重设最小高度列的高度
+				}
+			}
+			wrap.style.height = arr[minIndex] + 'px' // 设置高度
+			wrap.style.width = boxWidth * column + (column - 1) * 20 + 'px' // 为了居中重设宽度
+		}
+		function getMinIndex (height, arr) {
+			return arr.indexOf(height)
+		}
+		// 设置追加盒子的样式  减少刷新量
+		var getStartNumber = 0
+		function setStyle (box, top, left, index) {
+			if (getStartNumber >= index && index > 0) {
+				return false
+			}
+			box.style.cssText = 'position: absolute; top: ' + top + '; left: ' + left + '; opacity: 1; transition: opacity ease 1s;'
+			getStartNumber = index
+		}
+
+		function getBottom (wrap, boxes) {
+			// 获取body的高度和滚动的高度，如果大于内容的高度则说明到底了
+			var documentHeight = document.body.offsetHeight
+			var scrollTop = document.body.scrollTop
+			var lastBoxTop = parseInt(boxes[boxes.length - 1].style.top.split('px')[0])
+			var lastBoxHeight = boxes[boxes.length - 1].offsetHeight + 20
+			var totalHeight = lastBoxTop + lastBoxHeight + 80 // 加上80是因为有30的margin和10的padding
+			return documentHeight + scrollTop >= totalHeight ? true : false
+		}
+
+		function appendBox (wrap, boxes) {
+		//	先判断是否展示到了底部
+			if (getBottom(wrap, boxes)) {
+				for (var i in data) {
+					var addStr = '<div class="waterfall-item">' +
+						'<img src="' + data[i] + '" />' +
+						'<p class="text-box">高端简约黑白大气商务活动会议会展邀请函</p>' +
+						'</div>'
+					let div = document.createElement('div')
+					div.innerHTML = addStr
+					wrap.append(div.childNodes[0])
+				}
+			} else {
+				return false
+			}
+			waterfall(wrap, boxes)
+		}
+	</script>
+</body>
+</html>
