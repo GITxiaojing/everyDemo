@@ -137,7 +137,7 @@
 			for (var i = 0; i < boxes.length; i++) {
 				if (i < column) { // 当处于第一行时
 					arr[i] = boxes[i].offsetHeight + 20 // 底部留20px的间隔 + 本身盒子的高度
-					setStyle(boxes[i], 0 + 'px', (i > 0 ? i * (boxWidth + 20) : i * boxWidth) + 'px', i) // 设置样式
+					setStyle(boxes[i], 0 + 'px', i * (boxWidth + 20) + 'px', i) // 设置样式
 				} else { // 非第一行
 					var minHeight = Math.min.apply(null, arr) // 找出数组中最小高度的一个
 					minIndex = getMinIndex(minHeight, arr) // 数组中最小高度的索引值

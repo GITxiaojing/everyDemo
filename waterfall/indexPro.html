@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>响应式瀑布流</title>
+	<style>
+		#container{
+			position: relative;
+			top:20px;
+			margin: 20px 20px;
+			background: #c00;
+		}
+		#container .wf{
+			position: absolute;
+			border: 1px solid #ccc;
+			font-size: 40px;
+			border-radius: 10px;
+			overflow: hidden;
+		}
+		p{
+			margin: 0px;
+			padding: 0px;
+		}
+		h1{
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+<h1>响应式瀑布流</h1>
+<div id="container"></div>
+</body>
+<script >
+	function wf(obj){
+		this.colHeight=[];         //每一列的高
+		this.colLeft=[];          //每一列的位置; 因为列是等宽的，所以每一列的位置也是固定的。
+		this.flag=0;              //标志位，包含图片的容器只需要创建一次
+		this.imgWidth=obj.wth;    //设置每一列的宽度
+		this.id=document.getElementById(obj.id);  //获取最外层的容器
+		this.classname=document.getElementsByClassName(obj.classname);  //获取瀑布流的类名
+		//变量一定要在init()之前给定义，不能放在init()之后
+		this.init();            //初始化
+	}
+	wf.prototype={
+		//获取m到n的随机值
+		random:function(m,n){
+			return Math.ceil(Math.random()*(n-m)+m);
+		},
+
+		//最小值的下标
+		getMinCol:function(arr){
+			var ca = arr,cl = arr.length,temp = ca[0],minc = 0;
+			for(var ci = 0; ci < cl; ci++){
+				if(temp > ca[ci]){
+					temp = ca[ci];
+					minc = ci;
+				}
+			}
+			return minc;
+		},
+
+		//获取页面的大小，从而调整列数。
+		widthchange:function(){
+
+			winWidth = document.body.clientWidth; //获取页面的宽度
+			//console.log("ttt   "+document.documentElement.clientHeight);
+			var cols=Math.floor((winWidth-40)/this.imgWidth);  //40是页面的两边的边距
+			//console.log(this.imgWidth);
+			var colsmar=Math.floor((winWidth-40-20*(cols+1))/this.imgWidth); //列数
+			//console.log(colsmar);
+			var cmargin=Math.floor(winWidth-this.imgWidth*colsmar-40)/(colsmar+1);  //每一列的间距
+			//console.log(cmargin);
+			for(var i=0;i<colsmar;i++){
+				this.colHeight[i]=20;
+				this.colLeft[i]=(i+1)*cmargin+i*this.imgWidth;
+			}
+		},
+		//创建页面视图
+		createDiv:function(m){
+			var div="";
+			for(var n=0; n<m;n++){
+				var height=this.random(150,350);
+				div+="<div  class='wf' style=height:"+height+"px;width:"+this.imgWidth+"px;><p>"+(n+1)+"</p><img src='../images/a1.jpg' data-src='../images/a"+((n+1) % 15)+".jpg' style=height:" + height + ";width:"+this.imgWidth+"px;></div>";
+			}
+			this.id.innerHTML=div;
+		},
+		//设置每个小块的样式，边距等等
+		setStyle:function(){
+			for(var i=0;i<50;i++){
+				var lowcol=this.getMinCol(this.colHeight);
+				this.classname[i].style.left=this.colLeft[lowcol]+"px";
+				this.classname[i].style.top=this.colHeight[lowcol]+"px";
+				this.colHeight[lowcol]=this.classname[i].offsetHeight+this.classname[i].offsetTop+20;//offsetTop是数值
+			}
+		},
+		init:function(){
+			if(!this.flag){
+				//只创建小块一次，不然会每次都得重新加载图片
+				this.createDiv(50);
+				this.flag=1;//设置flag=1,这样下次就不会加载了
+			}
+			this.widthchange();
+			//newContainer.init();
+
+			this.setStyle();
+
+		}
+	}
+
+
+	//只加载在可视区内的图片
+	function LazyLoad(id){
+		this.container=document.getElementById(id);  //获取id
+		this.imgs=this.getImgs();                    //得到img数组
+		this.init();
+	}
+
+	LazyLoad.prototype={
+
+		init:function(){
+			this.update();
+		},
+		getImgs:function(){
+			var arr=[];
+			var imgs=this.container.getElementsByTagName("img");
+			for (var i=0,len=imgs.length;i<len;i++){
+				arr.push(imgs[i]);
+			}
+			return arr;
+		},
+		update:function(){
+			if(!this.imgs.length){
+				//console.log(this.imgs.length);
+				return;
+			}
+			var i=this.imgs.length;
+			for(--i;i>=0;i--){
+				if (this.show(i)){
+					this.imgs[i].src=this.imgs[i].dataset.src;
+					this.imgs.splice(i,1);
+					//console.log(newContainer.imgs[i].dataset.src);
+				}
+			}
+		},
+		//显示图片，判定图片是否在可是区域内。
+		show:function(i){
+			var img=this.imgs[i],
+				scrollTop=document.documentElement.scrollTop||document.body.scrollTop,
+				scrollBottom=scrollTop+document.documentElement.clientHeight,
+				imgTop=this.pageY(img),
+				imgBottom=imgTop+img.offsetHeight;
+			//如果满足，让他显示。
+			if(imgBottom>scrollTop && imgBottom<scrollBottom || (imgTop>scrollTop && imgTop<imgBottom))
+				return true;
+			return false;
+		},
+		//获取图片的最高点的y坐标
+		pageY:function(element){
+			if(element.offsetParent){
+				return element.offsetTop+this.pageY(element.offsetParent);
+			}else{
+				return element.offsetTop;
+			}
+		}
+	}
+
+
+	//var dom=document.getElementById("container");
+	//var cName=document.getElementsByClassName("wf");
+
+	//绑定事件函数
+	function on(element,eventName,listener){
+		if (element.addEventListener){
+			element.addEventListener(eventName,listener,false);
+		}
+		else if (element.attachEvent){
+			element.attachEvent('on'+eventName,listener);
+		}
+		else
+			element['on'+eventName]=listener;
+	}
+
+	var newWf=new wf({wth:300,id:"container",classname:"wf"});//创建瀑布流
+	var newContainer=new LazyLoad("container"); //惰性加载函数
+
+	on(window,"resize",function(){
+		newWf.init();
+		newContainer.update();
+	})
+
+	//绑定scroll事件
+	on(window,"scroll",function(){
+		newContainer.update();
+	})
+
+</script>
+</html>
