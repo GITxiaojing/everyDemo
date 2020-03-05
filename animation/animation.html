@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>animation</title>
+</head>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	body {
+		padding: 100px;
+	}
+	.animate {
+		background: url("../images/animate.jpg") 0 0 no-repeat;
+		/*width: 220px;*/
+		/*height: 220px;*/
+		width: 98.33px;
+		height: 103px;
+		background-size: auto 103px;
+		/*animation: animation 5s steps(20, start) 0ms infinite normal;*/
+		animation: animation 1s steps(5, start) 0ms infinite normal;
+		/*animation: animation 1s linear 0ms infinite normal;*/
+		/*-webkit-animation-name: animation;!* 动画名称 *!*/
+		/*-webkit-animation-iteration-count: infinite;!* 动画无限播放 *!*/
+		/*-webkit-animation-timing-function: step-start;!* 马上跳到动画每一结束桢的状态 *!*/
+		/*-webkit-animation-duration: 950ms;!* 动画运行的时间 *!*/
+		/*animation-fill-mode: backwards;*/
+	}
+	@keyframes animation {
+		0% {
+			background-position: 0 0;
+		}
+		/*14.29% {*/
+		/*	background-position: -98.33px 0;*/
+		/*}*/
+		/*28.57% {*/
+		/*	background-position: -196.67px 0;*/
+		/*}*/
+		/*42.86% {*/
+		/*	background-position: -295px 0;*/
+		/*}*/
+		/*57.14% {*/
+		/*	background-position: -393.33px 0;*/
+		/*}*/
+		/*71.43% {*/
+		/*	background-position: -491.67px 0;*/
+		/*}*/
+		/*85.71% {*/
+		/*	background-position: -590px 0;*/
+		/*}*/
+		100% {
+			/*background-position: -4400px 0;*/
+			background-position: -491.67px 0;
+		}
+	}
+</style>
+<body>
+	<div class="animate"></div>
+</body>
+</html>
