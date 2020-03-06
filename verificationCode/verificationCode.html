@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>验证码</title>
+</head>
+<body>
+<div style="margin: 0 auto; text-align: center;">
+    <h1>Validate Code</h1>
+    <input type="text" id="code" />
+    <div id="vCode" style="width: 100px; height: 30px; border: 1px solid #ccc; display: inline-block;"></div>
+    <button id="btn">验证</button>
+</div>
+<script>
+    window.onload = function () {
+        var container = document.getElementById("vCode");
+        var code = new vCode(container, {
+            len: 5,
+            bgColor: "#444",
+            colors: [
+                "#ddd",
+                "#df7",
+                "#7df",
+                "#9bf",
+                "#ee0"
+            ]
+        });
+        document.getElementById("btn").addEventListener("click", function () {
+            alert (code.verify(document.getElementById("code").value));
+        }, false);
+    }
+</script>
+<script src="code.js"></script>
+</body>
+</html>

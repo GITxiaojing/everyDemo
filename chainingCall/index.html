@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>链式调用例子</title>
+</head>
+<body>
+<ul>
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+	<li>6</li>
+	<li>7</li>
+	<li>8</li>
+	<li>9</li>
+</ul>
+<script lang="js">
+
+	/*==================== 批量操作 =====================*/
+	/*function batch(fn){
+		return function(target, ...args){
+			if(target.length >= 0){
+				return Array.from(target).map(item => fn.apply(this, [item, ...args]));
+			}else{
+				return fn.apply(this, [target, ...args]);
+			}
+		}
+	}
+
+	function setColor(el, color){
+		el.style.color = color;
+	}
+
+	function setFontSize(el, fontSize){
+		el.style.fontSize = fontSize;
+	}
+
+	setColor = batch(setColor);
+	setFontSize = batch(setFontSize);
+
+	let items1 = document.querySelectorAll('ul > li:nth-child(2n + 1)');
+	let items2 = document.querySelectorAll('ul > li:nth-child(3n + 1)');
+
+	setColor(items1, 'red');
+	setColor(items2, 'green');
+	setFontSize(items2, '22px');*/
+
+	/*========================= 可查询 ===========================*/
+	/*function batch(fn){
+		return function(target, ...args){
+			if(target.length >= 0){
+				return Array.from(target).map(item => fn.apply(this, [item, ...args]));
+			}else{
+				return fn.apply(this, [target, ...args]);
+			}
+		}
+	}
+
+	function queriable(fn){
+		return function(selector, ...args){
+			if(typeof selector === 'string'){
+				selector = document.querySelectorAll(selector);
+			}
+			return fn.apply(this, [selector, ...args]);
+		}
+	}
+
+	function setColor(el, color){
+		el.style.color = color;
+	}
+
+	function setFontSize(el, fontSize){
+		el.style.fontSize = fontSize;
+	}
+
+	setColor = queriable(batch(setColor));
+	setFontSize = queriable(batch(setFontSize));
+
+	setColor('ul > li:nth-child(2n + 1)', 'red');
+	setColor('ul > li:nth-child(3n + 1)', 'green');
+	setFontSize('ul > li:nth-child(3n + 1)', '22px');*/
+
+	/*========================== 打包 =============================*/
+	/*function batch(fn){
+		return function(target, ...args){
+			if(target.length >= 0){
+				return Array.from(target).map(item => fn.apply(this, [item, ...args]));
+			}else{
+				return fn.apply(this, [target, ...args]);
+			}
+		}
+	}
+
+	function queriable(fn){
+		return function(selector, ...args){
+			if(typeof selector === 'string'){
+				selector = document.querySelectorAll(selector);
+			}
+			return fn.apply(this, [selector, ...args]);
+		}
+	}
+
+	function pack(map){
+		return function(el, obj){
+			for(let key in obj){
+				map[key].call(this, el, obj[key]);
+			}
+		}
+	}
+
+	function setColor(el, color){
+		el.style.color = color;
+	}
+
+	function setFontSize(el, fontSize){
+		el.style.fontSize = fontSize;
+	}
+
+	let css = pack({color: setColor, fontSize: setFontSize});
+	css = queriable(batch(css));
+
+	css('ul > li:nth-child(2n + 1)', {color: 'red'});
+	css('ul > li:nth-child(3n + 1)', {color: 'green', fontSize: '22px'});
+*/
+	/*=========================== 链式调用 ============================*/
+	function batch(fn){
+		return function(target, ...args){
+			if(target.length >= 0){
+				return Array.from(target).map(item => fn.apply(this, [item, ...args]));
+			}else{
+				return fn.apply(this, [target, ...args]);
+			}
+		}
+	}
+
+	function queriable(fn){
+		return function(selector, ...args){
+			if(typeof selector === 'string'){
+				selector = document.querySelectorAll(selector);
+			}
+			return fn.apply(this, [selector, ...args]);
+		}
+	}
+
+	function pack(map){
+		return function(el, obj){
+			for(let key in obj){
+				map[key].call(this, el, obj[key]);
+			}
+		}
+	}
+
+	function methodize(fn, prop){
+		return function(...args){
+			fn.apply(null, [prop ? this[prop] : this, ...args]);
+			return this;
+		}
+	}
+
+	function setColor(el, color){
+		el.style.color = color;
+	}
+
+	function setFontSize(el, fontSize){
+		el.style.fontSize = fontSize;
+	}
+
+	function setText(el, text){
+		el.innerHTML = text;
+	}
+
+	let css = pack({color: setColor, fontSize: setFontSize});
+	css = queriable(batch(css));
+
+	let text = queriable(batch(setText));
+
+	function E(selector){
+		this._selector = selector;
+	}
+
+	E.prototype.css = methodize(css, '_selector');
+	E.prototype.text = methodize(text, '_selector');
+
+	function $(selector){
+		return new E(selector);
+	}
+
+	$('ul > li:nth-child(2n + 1)').css({color: 'red'}).text('abc');
+	$('ul > li:nth-child(3n + 1)').css({color: 'green', fontSize: '22px'});
+
+</script>
+</body>
+</html>

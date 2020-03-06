@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>天地图</title>
+    <script src="http://api.tianditu.gov.cn/api?v=4.0&tk=60150c1fe0807665be78c4928741e371" type="text/javascript"></script>
+</head>
+<body onload="onLoad()">
+    <div id="mapDiv" style="width: 100%; height: 100%;"></div>
+</body>
+<script>
+    var map;
+    var zoom = 12;
+    var lay;
+    var onlyMapLay;
+    var center = new T.LngLat(113.35, 23.12);
+    function onLoad() {
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        document.getElementsByTagName('body')[0].style.width = width + 'px';
+        document.getElementsByTagName('body')[0].style.height = height + 'px';
+
+        var imageURL = "http://t0.tianditu.gov.cn/img_w/wmts?" +
+            "SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles" +
+            "&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}";
+        lay = new T.TileLayer(imageURL, {minZoom: 1, maxZoom: 18});
+        var config = {layers: [lay]};
+        map = new T.Map('mapDiv', {
+            projection: 'EPSG:900913',
+            center: center,
+            zoom: zoom
+        });
+        drawMarker();
+        drawCircle();
+        getLoc();
+    }
+    
+    function drawMarker() {
+        var marker = new T.Marker(center);
+        map.addOverLay(marker);
+    }
+
+    function drawCircle() {
+        var circle = new T.Circle(center, 1000, {
+            color: 'red'
+        });
+        map.addOverLay(circle);
+    }
+    
+    function getLoc() {
+        var loc = new T.Geolocation();
+    }
+</script>
+</html>
