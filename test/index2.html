@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>Document</title>
+    <script src="./index.js"></script>
+    <style>
+        body {
+            font-size: 16px;
+        }
+
+        img {
+            width: 200px;
+            height: auto;
+        }
+
+        img:nth-child(1) {
+            background-color: springgreen;
+            width: 200px;
+            height: 200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .test {
+            border: 1px solid red;
+        }
+
+        .e-test {
+            font-size: 20px;
+        }
+
+        .c-n {
+            float: left;
+            margin-top: 2em;
+            margin-bottom: 50px;
+        }
+
+        .e-n {
+            opacity: 1;
+            margin-top: -40px;
+            margin-top: 2em;
+        }
+
+        p {
+            /* line-height: 10px; */
+            /* letter-spacing: -10px; */
+        }
+
+        .box-shadow-1px {
+            height: 200px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .scale {
+            position: relative;
+            margin-bottom: 20px;
+            border: none;
+        }
+
+        .scale::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid #000;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            width: 200%;
+            height: 200%;
+            transform: scale(0.5);
+            transform-origin: left top;
+        }
+
+        .border {
+            background-image: linear-gradient(180deg, red, red 50%, transparent 50%),
+                linear-gradient(270deg, red, red 50%, transparent 50%),
+                linear-gradient(0deg, red, red 50%, transparent 50%),
+                linear-gradient(90deg, red, red 50%, transparent 50%);
+            background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
+            background-repeat: no-repeat;
+            background-position: top, right top, bottom, left top;
+            padding: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        #wrap {
+            min-height: 100%;
+            background: pink;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #wrap .main {
+            padding-bottom: 50px;
+        }
+
+        #footer {
+            height: 50px;
+            line-height: 50px;
+            background: deeppink;
+            text-align: center;
+            margin-top: -50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <h3>li标签空白测试</h3>
+        <ul>
+            <li class="part1">part1</li>
+            <li class="part2">part2</li>
+            <li class="part3">part3</li>
+            <li class="part4">part4</li>
+        </ul>
+    </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            console.log('DOMContentLoad', new Date().getTime())
+        })
+        window.onload = function () {
+            console.log('window.devicePixelRatio: ', window.devicePixelRatio)
+            console.log('onLoad', new Date().getTime())
+        }
+    </script>
+</body>
+
+</html>

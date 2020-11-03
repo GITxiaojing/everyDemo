@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <title>hello world</title>
+    <link rel="stylesheet" href="./index.css">
+    <script>
+        window.onload = function () {
+            console.log('onLoad: ', new Date().getTime())
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .img {
+            float: left;
+            width: 200px;
+            height: 200px;
+            /* margin: 0  0 0 100px; */
+            _display: inline;
+            _zoom: 1;
+        }
+
+        div {
+            font-size: 12px;
+            float: left;
+        }
+
+        .less-font {
+            font-size: 10px;
+        }
+
+        a:link {
+            color: turquoise;
+        }
+
+        a:visited {
+            color: violet;
+        }
+
+        a:hover {
+            color: yellow;
+        }
+
+        a:active {
+            color: springgreen;
+        }
+
+        .wrap {
+            position: absolute;
+            top: 10px;
+            left: 26px;
+            width: 200px;
+            height: 200px;
+        }
+
+        .box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+
+            height: 200px;
+            background: #FDF3D9;
+            border: 1px solid #EEAC53
+        }
+
+        iframe {
+            width: 400px;
+            height: 400px;
+            z-index: -1
+        }
+
+        .px1 {
+            width: 1px;
+            height: 1px;
+            background-color: tomato;
+            overflow: hidden;
+            position: absolute;
+            left: 1200px;
+            top: 200px;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .p1 {
+            position: relative;
+            top: 20px;
+            height: 50px;
+            width: 150px;
+            background-color: blue;
+        }
+
+        .p2 {
+            position:absolute;
+            top: 10px;
+            left: 20px;
+            height: 30px;
+            width: 100px;
+            background-color: yellow;
+            z-index: 1;
+        }
+
+        .p3 {
+            position:absolute;
+            top: 0px;
+            left: 350px;
+            height: 100px;
+            width: 50px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="http://s2.sinaimg.cn/middle/69906822ga1e24ba6e971&690" width="444" height="395" alt="中国地图" usemap="#province"/>
+    <map name="province" id="province">
+        <area shape="rect" coords="80,112,110,125"  alt="新疆" href="https://baike.baidu.com/item/%E6%96%B0%E7%96%86/132263?fr=aladdin">
+        <area shape="rect" coords="77,209,110,229"  alt="西藏" href="https://baike.baidu.com/item/%E8%A5%BF%E8%97%8F/130045">
+        <area shape="rect" coords="150,176,185,192"  alt="青海" href="https://baike.baidu.com/item/%E9%9D%92%E6%B5%B7/31638">
+        <area shape="rect" coords="197,236,235,261"  alt="四川" href="https://baike.baidu.com/item/%E5%9B%9B%E5%B7%9D/212569">
+        <area shape="rect" coords="170,300,211,325"  alt="云南" href="https://baike.baidu.com/item/%E4%BA%91%E5%8D%97/206207">
+        <area shape="circle" coords="227,200,8"  alt="甘肃" href="https://baike.baidu.com/item/%E7%94%98%E8%82%83">
+        <area shape="circle" coords="240,177,5"  alt="宁夏" href="https://baike.baidu.com/item/%E7%94%98%E8%82%83">
+        <area shape="circle" coords="285,133,8"  alt="内蒙古" href="https://baike.baidu.com/item/%E7%94%98%E8%82%83">
+    </map>
+    <div>12px的字体</div>
+    <div class="less-font">小于12px的字体</div>
+    <div class="p1">1
+        <div class="p2">2</div>
+    </div>
+    <div class="p3">3</div>
+    <!-- <a href="">我是超链接</a> -->
+    <!-- <div class="wrap">
+        <iframe src="" frameborder="0"></iframe>
+        <div class="box">fsfsfsfsdf</div>
+    </div>
+    <select style="z-index: 1;" name="" id="">
+        <option value="1">hello</option>
+        <option value="2">world</option>
+    </select> -->
+    <!-- <div class="px1"></div>
+    <div style="position:absolute;background:red;width:100px;height:200px;left:20px;top:20px;">
+        <iframe
+            style="position:absolute;width:100%;height:100%;_filter:alpha(opacity=0);opacity=0;border-style:none;"></iframe>
+        sdfsdfsdf<br>sdfsdfsdf<br>sdfsdfsdf<br>sdfsdfsdf<br>
+    </div>
+    <select>
+        <option>sdf</option>
+    </select>
+    dfgdfgdfgdfgdfgdfgdfgdfgdfdfgdfgdfgdfgdfgdfgdfgdfgddfgdfgdfgdfgdfgdfgdfgdfgd
+    dfgdfgdfgdfgdfgdfgdfgdfgdf -->
+</body>
+
+</html>

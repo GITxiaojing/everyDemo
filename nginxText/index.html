@@ -2,9 +2,32 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>$Title$</title>
+	<title>111</title>
+	<script src="../jeDateDemo/jquery-1.11.3.js"></script>
 </head>
 <body>
-$END$
+	<button onclick="onClick()">click here</button>
+	<script>
+		function onClick() {
+			$.ajax({
+				type:"GET",
+				url:"http://192.168.0.100:8080/demo/test",
+				async:true,   // 异步，默认开启，也就是$.ajax后面的代码是不是跟$.ajx里面的代码一起执行
+				cache:true,  // 表示浏览器是否缓存被请求页面,默认是 true
+				dataType:"json",   // 返回浏览器的数据类型，指定是json格式，前端这里才可以解析json数据
+				success:function(data){
+					alert('success')
+				},
+				error:function(){
+					console.log("发生错误")
+					alert("发生错误");
+				},
+				complete:function(){
+					console.log("ajax请求完事，最终操作在这里完成")
+				}
+			});
+			// alert("测试异步")
+		}
+	</script>
 </body>
 </html>

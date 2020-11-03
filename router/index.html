@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>路由实现</title>
+</head>
+
+<body>
+    <button type="button" onclick="history.go(-1)">返回</button>
+    <h2>push模式</h2>
+    <ul>
+        <li onclick="Router.replace(baseUrl)">首页</li>
+        <li onclick="Router.replace(baseUrl + 'news')">新闻</li>
+        <li onclick="Router.replace(baseUrl + 'product')">产品</li>
+    </ul>
+    <div id="app"></div>
+    <script>
+        var app = document.getElementById('app')
+        var baseUrl = "/"
+        function RouterClass(opts) {
+
+            this.routes = {}
+            this.curUrl = "" // 初始化url
+            this.mode = ''
+            if (opts) {
+                this.mode = opts.mode
+                if (this.mode === 'history') {
+                    this.eventHistoryRouter()
+                } else {
+                    this.eventHashRouter()
+                }
+            } else {
+                this.eventHashRouter()
+            }
+        }
+        RouterClass.prototype.route = function (path, callback) {
+            this.routes[path] = callback || function () { }
+        }
+
+        // 监听hash模式路由
+        RouterClass.prototype.eventHashRouter = function () {
+            window.addEventListener('load', this.hashRouter.bind(this))
+            window.addEventListener('hashchange', this.hashRouter.bind(this))
+        }
+
+        RouterClass.prototype.eventHistoryRouter = function () {
+            window.addEventListener('load', this.historyRouter.bind(this))
+            window.addEventListener('popstate', this.historyRouter.bind(this))
+        }
+
+        RouterClass.prototype.hashRouter = function () {
+            this.curUrl = window.location.hash.slice(1) || '/'
+            this.routes[this.curUrl]()
+        }
+
+        RouterClass.prototype.historyRouter = function () {
+            this.curUrl = window.location.pathname
+            console.log('this.curUrl: ', this.curUrl)
+            this.routes[this.curUrl]()
+        }
+
+        RouterClass.prototype.push = function (url) {
+            if (this.mode === 'history') {
+                window.history.pushState({}, null, url)
+                this.routes[url]()
+            } else {
+                url = '#' + url
+                window.location.href = url
+            }
+        }
+
+        RouterClass.prototype.replace = function (url) {
+            if (this.mode === 'history') {
+                window.history.replaceState({}, null, url)
+                this.routes[url]()
+            } else {
+                url = '#' + url
+                window.location.replace(url)
+            }
+        }
+
+        var Router = new RouterClass({mode: 'history'})
+        Router.route(baseUrl, function () {
+            app.innerHTML = '首页'
+        })
+        Router.route(baseUrl + 'news', function () {
+            app.innerHTML = '新闻'
+        })
+        Router.route(baseUrl + 'product', function () {
+            app.innerHTML = '产品页面'
+        })
+    </script>
+</body>
+
+</html>

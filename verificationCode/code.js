@@ -1,3 +1,4 @@
+console.log(1111111111)
 (function () {
     var randCode = function (length) {
         var key = {
